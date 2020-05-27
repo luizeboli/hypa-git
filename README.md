@@ -5,14 +5,14 @@
   <br>Hypa Git<br>
 </h1>
 
-Hypa-Git is a <a href="http://zsh.org" target="_blank"><code>zsh</code></a> script to help us with the robotic task of create RC's and merge all branches at the end sprint ending.
+Hypa-Git is a <a href="http://zsh.org" target="_blank"><code>zsh</code></a> script to help us with the robotic task of create RC's and merge all branches at the sprint ending.
 
 Briefly what `hypa-git` does is create a new RC branch from last tag and name it based on provided semantic version option.
 
 > Note¹: This is an alpha version, which means that you might find some bugs.
 > Please open an issue if so 😁.
 
-> Note²: I'm not a zsh expert. Some code on this script can be done better or are wrong.
+> Note²: I'm not a zsh expert. Perhaps some code on this script can be done better or are wrong.
 > I would be happy if you open an issue to talk about it 🤝
 
 ## Requirements
@@ -21,7 +21,7 @@ You **must** have <a href="http://zsh.org" target="_blank"><code>zsh</code></a> 
 
 ## Installing
 
-### [npm]
+### [npm](https://npmjs.com)
 
 ```
 npm install -g hypa-git
