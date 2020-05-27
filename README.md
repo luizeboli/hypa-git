@@ -46,11 +46,17 @@ You can exec `hypa-git` from your terminal for a usage guide or look at below op
 
 ### Options
 
-| Name           | Description | Required |
-| ------         | ----------- | -------- |
-| -major         | Major version increment on new RC | No
-| -minor         | Minor version increment on new RC | No
-| -patch         | Patch version increment on new RC | No
-| -b, --branches | Branches to merge on new RC       | Yes
+| Name           | Description                                                                                   | Required |
+| ------         | -----------                                                                                   | -------- |
+| -major         | Major version increment on new RC                                                             | No
+| -minor         | Minor version increment on new RC                                                             | No
+| -patch         | Patch version increment on new RC                                                             | No
+| -b, --branches | Branches to merge on new RC<br />**They must be in paretheses**<br />Separated by a **space** | Yes
 
 > Note: If no semantic version option is provided, hypa-git will consider the new RC as a patch.
+
+## Contributors
+
+| Thanks for the idea!<br />[![Renan Marangon](https://github.com/maracunha.png?size=100)](https://github.com/maracunha) |
+| :--:                                                                                           |
+| [Renan Marangon](https://github.com/maracunha)                                                 |

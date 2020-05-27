@@ -51,12 +51,12 @@ usage() {
   fi
 
   hypa::print "\n${bold}USAGE:"
-  hypa::print "  hypa-git [options]"
+  hypa::print "  hypa-git [-b | --branches] \"branches to merge\" [options]"
   hypa::print "\n${bold}OPTIONS:"
   hypa::print "  -major           Increments a major version from last tag."
   hypa::print "  -minor           Increments a minor version from last tag."
   hypa::print "  -patch           Increments a patch version from last tag."
-  hypa::print "  -b, --branches   Branches to merge on new RC."
+  hypa::print "  -b, --branches   Branches to merge on new RC. They must be in parentheses separated by a space"
   hypa::print "\n${bold}NOTES:"
   hypa::print "  If no semantic version option is provided, hypa-git will consider the new RC as a patch."
 }
