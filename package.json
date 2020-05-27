@@ -1,0 +1,14 @@
+{
+  "name": "hypa-git",
+  "version": "0.1.0-alpha",
+  "description": "A zsh script to create new RC's and merge branches",
+  "scripts": {
+    "postinstall": "./scripts/postinstall.zsh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizeboli/hypa.git"
+  },
+  "author": "Luiz Felicio (https://github.com/luizeboli)",
+  "license": "MIT"
+}
