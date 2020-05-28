@@ -46,14 +46,42 @@ You can exec `hypa-git` from your terminal for a usage guide or look at below op
 
 ### Options
 
-| Name           | Description                                                                                   | Required |
-| ------         | -----------                                                                                   | -------- |
-| -major         | Major version increment on new RC                                                             | No
-| -minor         | Minor version increment on new RC                                                             | No
-| -patch         | Patch version increment on new RC                                                             | No
-| -b, --branches | Branches to merge on new RC<br />**They must be in paretheses**<br />Separated by a **space** | Yes
+At least **one option** is required
 
-> Note: If no semantic version option is provided, hypa-git will consider the new RC as a patch.
+| Name               | Description                                                                                   
+| ------             | -----------                                                                                   
+| -nv, --new-version | New RC name                                                                                   
+| -b, --branches     | Branches to merge on new RC<br />**They must be in paretheses**<br />**Space** delimited 
+| -major             | Major version increment on new RC                                                             
+| -minor             | Minor version increment on new RC                                                             
+| -patch             | Patch version increment on new RC                                                             
+
+Some notes about how `hypa-git` handle these options
+* If no new version option is provided, `hypa-git` will increment version based on semver option
+* If no semver option is provided, `hypa-git` will consider the new RC as a patch.
+* If no branch option is provided, `hypa-git` will only create and push the new RC.
+* If RC already exists, `hypa-git` will skip creation step.
+
+### Usage Examples
+
+Let's use a git repository with newest tag named **1.13.1** as an example:
+
+```sh
+# This block will create a new branch named '1.13.2-RC'
+# And merge 'branch-one' and 'branch-two' 
+hypa-git -b "branch-one branch-two"
+
+# This block will create a new branch named '1.14.0-RC' 
+# And merge 'branch-one'
+# In case there's a conflict, hypa-git you warn you and open vscode (if installed)
+hypa-git -b "branch-one" -minor
+
+# This block will create a new branch named '2.0.0-RC'
+hypa-git -nv 2.0.0-RC
+
+# This block will create a new branch named '1.13.2-RC'
+hypa-git -patch 
+```
 
 ## Contributors
 
