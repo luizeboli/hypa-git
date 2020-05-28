@@ -51,14 +51,17 @@ usage() {
   fi
 
   hypa::print "\n${bold}USAGE:"
-  hypa::print "  hypa-git [-b | --branches] \"branches to merge\" [options]"
+  hypa::print "  hypa-git [options]"
   hypa::print "\n${bold}OPTIONS:"
-  hypa::print "  -major           Increments a major version from last tag."
-  hypa::print "  -minor           Increments a minor version from last tag."
-  hypa::print "  -patch           Increments a patch version from last tag."
-  hypa::print "  -b, --branches   Branches to merge on new RC. They must be in parentheses separated by a space"
+  hypa::print "  -nv, --new-version  New RC name."
+  hypa::print "  -b, --branches      Branches to merge on new RC. ${bold}They must be in parentheses separated by a space."
+  hypa::print "  -major              Increments a major version from last tag."
+  hypa::print "  -minor              Increments a minor version from last tag."
+  hypa::print "  -patch              Increments a patch version from last tag."
   hypa::print "\n${bold}NOTES:"
-  hypa::print "  If no semantic version option is provided, hypa-git will consider the new RC as a patch."
+  hypa::print "  If no new version option, hypa-git will increment version based on semver option"
+  hypa::print "  If no semver option, hypa-git will consider the new RC as a patch."
+  hypa::print "  If no branch option, hypa-git will only create and push the new RC."
 }
 
 get-new-version() {
@@ -73,16 +76,18 @@ get-new-version() {
 
   # We should check if user has chosen version type
   # If not, we consider it as a patch
+  # We should also check if user specified RC name
+  # If so, consider it.
   # @TODO: Allow only one type.
-  if [[ $HYPA_GIT_IS_MAJOR == true ]]; then
-    HYPA_GIT_NEW_VERSION="$(($major+1)).0.0"
-  elif [[ $HYPA_GIT_IS_MINOR == true ]]; then
-    HYPA_GIT_NEW_VERSION="$major.$(($minor+1)).0"
-  else
-    HYPA_GIT_NEW_VERSION="$major.$minor.$(($patch+1))"
+  if [[ -z $HYPA_GIT_NEW_VERSION ]]; then    
+    if [[ $HYPA_GIT_IS_MAJOR == true ]]; then
+      HYPA_GIT_NEW_VERSION="$(($major+1)).0.0-RC"
+    elif [[ $HYPA_GIT_IS_MINOR == true ]]; then
+      HYPA_GIT_NEW_VERSION="$major.$(($minor+1)).0-RC"
+    else
+      HYPA_GIT_NEW_VERSION="$major.$minor.$(($patch+1))-RC"
+    fi
   fi
-
-  HYPA_GIT_NEW_VERSION="$HYPA_GIT_NEW_VERSION-RC"
 }
 
 create-new-version() {  
@@ -98,6 +103,8 @@ create-new-version() {
 }
 
 merge-branches() {
+  [[ -z $HYPA_GIT_BRANCHES ]] && return
+
   local 'conflicts' 'notmerged'
   conflicts=()
   notmerged=()
@@ -138,6 +145,9 @@ validate-options() {
   # Validate parameters
   while [[ "$#" -gt 0 ]]; do
       case $1 in
+          -nv | --new-version )   shift
+                                  [[ -n ${1+x} ]] && HYPA_GIT_NEW_VERSION=$1
+                                  ;;
           -major )                HYPA_GIT_IS_MAJOR=true
                                   ;;
           -minor )                HYPA_GIT_IS_MINOR=true
@@ -146,7 +156,7 @@ validate-options() {
                                   ;;
           -b | --branches )       
                                   shift
-                                  HYPA_GIT_BRANCHES="$1"
+                                  [[ -n ${1+x} ]] && HYPA_GIT_BRANCHES="$1"
                                   ;;
           -h | --help )           usage
                                   exit
@@ -157,7 +167,7 @@ validate-options() {
           * )                     usage "$1"
                                   exit 1
       esac
-      shift
+      [[ "$#" -ne 0 ]] && shift
   done
 }
 
