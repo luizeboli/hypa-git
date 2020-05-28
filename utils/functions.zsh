@@ -51,6 +51,11 @@ hypa::exec-cmd() {
   echo -n "$label" && eval ${1}
 }
 
+#Open vscode if installed
+hypa::open-code() {
+  [[ $(which code) ]] && code .
+}
+
 # Prints a welcome message
 hypa::welcome() {
   echo '

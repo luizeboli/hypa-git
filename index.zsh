@@ -124,7 +124,7 @@ merge-branches() {
 
   if [[ ${#conflicts[@]} -gt 0 ]]; then
     hypa::warn "Merging your branches (${(j:, :)conflicts}) resulted in some conflicts\nFix them and commit your changes..."
-    code .
+    hypa::open-code
   fi
 
   if [[ ${#notmerged[@]} -gt 0 ]]; then
