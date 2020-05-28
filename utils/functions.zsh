@@ -19,10 +19,10 @@ hypa::print() {
   echo "$reset$color$rest$reset"
 }
 
-hypa::info()    { hypa::print "$DIVIDER\n$cyan"            "HYPA ℹ️: $@" ; }
-hypa::success() { hypa::print "$DIVIDER\n$bold$green"      "HYPA ✅: $@ \n$reset$DIVIDER" ; }
-hypa::error()   { hypa::print "$bold$red"                  "HYPA ‼️: $@ \n$reset$DIVIDER" ; }
-hypa::warn()    { hypa::print "$yellow"                    "HYPA ⚠️: $@" ; }
+hypa::info()    { hypa::print "$DIVIDER\n$cyan"            "[HYPA 💭 ]: $@" ; }
+hypa::success() { hypa::print "$DIVIDER\n$bold$green"      "[HYPA ✨ ]: $@ \n$reset$DIVIDER" ; }
+hypa::error()   { hypa::print "$bold$red"                  "[HYPA ❌ ]: $@ \n$reset$DIVIDER" ; }
+hypa::warn()    { hypa::print "$yellow"                    "[HYPA ⚠️ ]: $@" ; }
 
 # Check if working directory is a git repository
 hypa::is-git() {
