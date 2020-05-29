@@ -93,13 +93,16 @@ get-new-version() {
 create-new-version() {  
   if [[ -z $(git branch --list $HYPA_GIT_NEW_VERSION) && -z $(git branch -a | grep "remotes/origin/$HYPA_GIT_NEW_VERSION") ]]; then
     hypa::info "Creating new branch '$HYPA_GIT_NEW_VERSION' and doing a checkout..."
-    hypa::exec-cmd "git checkout -b $HYPA_GIT_NEW_VERSION tags/$HYPA_GIT_LAST_TAG" || { error "Unable to create a new branch, please see above output..." && exit 1 }
+    hypa::exec-cmd "git checkout -b $HYPA_GIT_NEW_VERSION tags/$HYPA_GIT_LAST_TAG" || { hypa::error "Unable to create a new branch, please see above output..." && exit 1 }
 
     hypa::info "Pushing '$HYPA_GIT_NEW_VERSION' to upstream..."
-    hypa::exec-cmd "git push -u" || { error "Unable to push to upstream, please see above output..." && exit 1 }
+    hypa::exec-cmd "git push -u" || { hypa::error "Unable to push to upstream, please see above output..." && exit 1 }
   else
     hypa::warn "Branch '$HYPA_GIT_NEW_VERSION' already exists, skipping to checkout..." 
-    hypa::exec-cmd "git checkout $HYPA_GIT_NEW_VERSION" || { error "Unable to checkout branch '$HYPA_GIT_NEW_VERSION', please see above output..."}
+    hypa::exec-cmd "git checkout $HYPA_GIT_NEW_VERSION" || { hypa::error "Unable to checkout branch '$HYPA_GIT_NEW_VERSION', please see above output..." && exit 1}
+
+    hypa::info "Pulling commits from '$HYPA_GIT_NEW_VERSION'..."
+    hypa::exec-cmd "git pull" || { hypa::error "Unable to pull from '$HYPA_GIT_NEW_VERSION', please see above output..." && exit 1 }
   fi
 }
 
@@ -120,6 +123,9 @@ merge-branches() {
       fi
     }
   done
+
+  hypa::info "Pushing successful merges..."
+  hypa::exec-cmd "git push" || { hypa::error "Unable to push merges, please see above output... " && exit 1 }
 
   [[ ${#conflicts[@]} -gt 0 || ${#notmerged[@]} -gt 0 ]] && echo "$NEW_LINE"
 
