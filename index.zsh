@@ -98,7 +98,8 @@ create-new-version() {
     hypa::info "Pushing '$HYPA_GIT_NEW_VERSION' to upstream..."
     hypa::exec-cmd "git push -u" || { error "Unable to push to upstream, please see above output..." && exit 1 }
   else
-    hypa::warn "Branch '$HYPA_GIT_NEW_VERSION' already exists, skipping creation..." 
+    hypa::warn "Branch '$HYPA_GIT_NEW_VERSION' already exists, skipping to checkout..." 
+    hypa::exec-cmd "git checkout $HYPA_GIT_NEW_VERSION" || { error "Unable to checkout branch '$HYPA_GIT_NEW_VERSION', please see above output..."}
   fi
 }
 
