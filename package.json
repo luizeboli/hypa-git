@@ -3,7 +3,8 @@
   "version": "0.1.2-alpha",
   "description": "A zsh script to create new RC's and merge branches",
   "scripts": {
-    "postinstall": "./scripts/postinstall.zsh"
+    "postinstall": "./scripts/postinstall.zsh",
+    "postuninstall": "./scripts/postuninstall.zsh"
   },
   "repository": {
     "type": "git",
