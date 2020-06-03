@@ -51,7 +51,7 @@ At least **one option** is required
 | Name               | Description                                                                                   
 | ------             | -----------                                                                                   
 | -nv, --new-version | New RC name                                                                                   
-| -b, --branches     | Branches to merge on new RC<br />**They must be in paretheses**<br />**Space** delimited 
+| -b, --branches     | Branches to merge on new RC<br />**They must be in double quotes**<br />**Space** delimited 
 | -major             | Major version increment on new RC                                                             
 | -minor             | Minor version increment on new RC                                                             
 | -patch             | Patch version increment on new RC                                                             
