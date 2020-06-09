@@ -54,7 +54,7 @@ usage() {
   hypa::print "  hypa-git [options]"
   hypa::print "\n${bold}OPTIONS:"
   hypa::print "  -nv, --new-version  New RC name."
-  hypa::print "  -b, --branches      Branches to merge on new RC. ${bold}They must be in parentheses separated by a space."
+  hypa::print "  -b, --branches      Branches to merge on new RC. ${bold}They must be in double quotes separated by a space."
   hypa::print "  -major              Increments a major version from last tag."
   hypa::print "  -minor              Increments a minor version from last tag."
   hypa::print "  -patch              Increments a patch version from last tag."
