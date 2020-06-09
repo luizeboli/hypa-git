@@ -96,7 +96,7 @@ create-new-version() {
     hypa::exec-cmd "git checkout -b $HYPA_GIT_NEW_VERSION tags/$HYPA_GIT_LAST_TAG" || { hypa::error "Unable to create a new branch, please see above output..." && exit 1 }
 
     hypa::info "Pushing '$HYPA_GIT_NEW_VERSION' to upstream..."
-    hypa::exec-cmd "git push -u" || { hypa::error "Unable to push to upstream, please see above output..." && exit 1 }
+    hypa::exec-cmd "git push -u origin $HYPA_GIT_NEW_VERSION" || { hypa::error "Unable to push to upstream, please see above output..." && exit 1 }
   else
     hypa::warn "Branch '$HYPA_GIT_NEW_VERSION' already exists, skipping to checkout..." 
     hypa::exec-cmd "git checkout $HYPA_GIT_NEW_VERSION" || { hypa::error "Unable to checkout branch '$HYPA_GIT_NEW_VERSION', please see above output..." && exit 1}
