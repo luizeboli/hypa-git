@@ -1,6 +1,6 @@
 {
   "name": "hypa-git",
-  "version": "0.1.6-alpha",
+  "version": "0.1.7-alpha",
   "description": "A zsh script to create new RC's and merge branches",
   "scripts": {
     "postinstall": "./scripts/postinstall.zsh",

@@ -115,7 +115,7 @@ merge-branches() {
 
   for branch in $(echo "$HYPA_GIT_BRANCHES"); do
     hypa::info "Merging '$branch' into '$HYPA_GIT_NEW_VERSION'..."
-    hypa::exec-cmd "git merge $branch --commit --progress -m \"Merge branch $branch into $HYPA_GIT_NEW_VERSION\" &> /dev/null" "false" || {
+    hypa::exec-cmd "git merge $branch --commit --progress -m \"Merge branch $branch into $HYPA_GIT_NEW_VERSION\"" || {
       if [[ $? -eq "128" ]]; then
         notmerged=($notmerged $branch)
       else
