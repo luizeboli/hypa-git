@@ -31,7 +31,7 @@ hypa::is-git() {
 
 hypa::git-fetch() {
   hypa::info "Fetching from origin before start..."
-  git fetch origin
+  git fetch --all --prune
 }
 
 # Check if git is dirty
@@ -65,5 +65,5 @@ hypa::welcome() {
 /_//_/ \_, // .__/\_,_/  \___//_/ \__/ 
       /___//_/                                                                                                 
 '
-  hypa::print "${yellow}Version: 0.1.5-alpha\n"
+  hypa::print "${yellow}Version: 0.1.6-alpha\n"
 }
