@@ -115,7 +115,7 @@ merge-branches() {
 
   for branch in $(echo "$HYPA_GIT_BRANCHES"); do
     hypa::info "Pulling commits from '$branch'..."
-    hypa::exec-cmd "git pull $branch" || { 
+    hypa::exec-cmd "git pull origin $branch" || { 
       echo "\n" && hypa::error "Unable to pull commits from $branch, please see above output... " && exit 1
      }
 
