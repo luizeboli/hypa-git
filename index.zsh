@@ -114,6 +114,11 @@ merge-branches() {
   notmerged=()
 
   for branch in $(echo "$HYPA_GIT_BRANCHES"); do
+    hypa::info "Pulling commits from '$branch'..."
+    hypa::exec-cmd "git pull $branch" || { 
+      echo "\n" && hypa::error "Unable to pull commits from $branch, please see above output... " && exit 1
+     }
+
     hypa::info "Merging '$branch' into '$HYPA_GIT_NEW_VERSION'..."
     hypa::exec-cmd "git merge $branch --commit --progress -m \"Merge branch $branch into $HYPA_GIT_NEW_VERSION\"" || {
       if [[ $? -eq "128" ]]; then
@@ -187,7 +192,7 @@ init() {
  
   hypa::is-git       || { hypa::error "Working directory isn't a git repository." && exit 1 }
   hypa::is-git-dirty && { hypa::error "Please commit your changes first." && exit 1 }
-  hypa::git-fetch    || { hypa::error "Unable to fetch origin, please se above error..." && exit 1 }
+  hypa::git-fetch    || { hypa::error "Unable to fetch origin, please see above error..." && exit 1 }
   hypa::git-last-tag || { hypa::error "Could not get last tag name, please see above error..." && exit 1 }
 
   get-new-version
