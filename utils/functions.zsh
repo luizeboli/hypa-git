@@ -65,5 +65,5 @@ hypa::welcome() {
 /_//_/ \_, // .__/\_,_/  \___//_/ \__/ 
       /___//_/                                                                                                 
 '
-  hypa::print "${yellow}Version: 0.1.9-alpha\n"
+  hypa::print "${yellow}Version: ${HYPA_GIT_VERSION}\n"
 }

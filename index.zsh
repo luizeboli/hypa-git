@@ -27,6 +27,8 @@ HYPA_GIT_IS_MINOR="false"
 HYPA_GIT_IS_PATCH="false"
 HYPA_GIT_BRANCHES=""
 
+HYPA_GIT_VERSION="1.0.0"
+
 # Check if zsh is installed and exit if not
 [[ ! $(which zsh) ]] && { echo "\nZSH not installed." && exit 1 }
 
