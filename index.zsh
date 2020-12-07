@@ -119,6 +119,7 @@ update-package-version() {
     perl -0777 -pi -e "s/\.*\"version\".*/\"version\": \"$HYPA_GIT_NEW_VERSION_NO_RC\",/" package.json
     if [[ $? -eq "0" ]]; then
       hypa::exec-cmd "git commit -am \"chore: update package.json version\"" || { hypa::error "Unable to commit package.json, please see above output..." && exit 1 }
+      hypa::exec-cmd "git push" || { hypa::error "Unable to push package.json, please see above output..." && exit 1 }
       hypa::success "Successfully updated package version..."
     else
       hypa:error "Could not update package version..."
