@@ -22,12 +22,13 @@ DIVIDER="-----------------------------------------------------------------"
 HYPA_GIT_ROOT="$HOME/.hypa-git"
 HYPA_GIT_LAST_TAG=""
 HYPA_GIT_NEW_VERSION=""
+HYPA_GIT_NEW_VERSION_NO_RC=""
 HYPA_GIT_IS_MAJOR="false"
 HYPA_GIT_IS_MINOR="false"
 HYPA_GIT_IS_PATCH="false"
 HYPA_GIT_BRANCHES=""
 
-HYPA_GIT_VERSION="1.0.0"
+HYPA_GIT_VERSION="1.1.0"
 
 # Check if zsh is installed and exit if not
 [[ ! $(which zsh) ]] && { echo "\nZSH not installed." && exit 1 }
@@ -84,10 +85,13 @@ get-new-version() {
   if [[ -z $HYPA_GIT_NEW_VERSION ]]; then    
     if [[ $HYPA_GIT_IS_MAJOR == true ]]; then
       HYPA_GIT_NEW_VERSION="$(($major+1)).0.0-RC"
+      HYPA_GIT_NEW_VERSION_NO_RC="$(($major+1)).0.0"
     elif [[ $HYPA_GIT_IS_MINOR == true ]]; then
       HYPA_GIT_NEW_VERSION="$major.$(($minor+1)).0-RC"
+      HYPA_GIT_NEW_VERSION_NO_RC="$major.$(($minor+1)).0"
     else
       HYPA_GIT_NEW_VERSION="$major.$minor.$(($patch+1))-RC"
+      HYPA_GIT_NEW_VERSION_NO_RC="$major.$minor.$(($patch+1))"
     fi
   fi
 }
@@ -105,6 +109,21 @@ create-new-version() {
 
     hypa::info "Pulling commits from '$HYPA_GIT_NEW_VERSION'..."
     hypa::exec-cmd "git pull" || { hypa::error "Unable to pull from '$HYPA_GIT_NEW_VERSION', please see above output..." && exit 1 }
+  fi
+}
+
+update-package-version() {
+  hypa::info "Checking for a package.json file so we can update it's version..."
+  if [[ -f "./package.json" ]]; then
+    hypa::info "Updating package.json version..."
+    perl -0777 -pi -e "s/\.*\"version\".*/\"version\": \"$HYPA_GIT_NEW_VERSION_NO_RC\",/" package.json
+    if [[ $? -eq "0" ]]; then
+      hypa::success "Successfully updated package version..."
+    else
+      hypa:error "Could not update package version..."
+    fi
+   else
+    hypa::info "File not found, doing nothing..."
   fi
 }
 
@@ -199,6 +218,7 @@ init() {
 
   get-new-version
   create-new-version
+  update-package-version
   merge-branches
 
   hypa::success "Job done :)\nEnjoy!"
