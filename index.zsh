@@ -28,7 +28,7 @@ HYPA_GIT_IS_MINOR="false"
 HYPA_GIT_IS_PATCH="false"
 HYPA_GIT_BRANCHES=""
 
-HYPA_GIT_VERSION="1.1.0"
+HYPA_GIT_VERSION="1.1.1"
 
 # Check if zsh is installed and exit if not
 [[ ! $(which zsh) ]] && { echo "\nZSH not installed." && exit 1 }
@@ -118,6 +118,7 @@ update-package-version() {
     hypa::info "Updating package.json version..."
     perl -0777 -pi -e "s/\.*\"version\".*/\"version\": \"$HYPA_GIT_NEW_VERSION_NO_RC\",/" package.json
     if [[ $? -eq "0" ]]; then
+      hypa::exec-cmd "git commit -am \"chore: update package.json version\"" || { hypa::error "Unable to commit package.json, please see above output..." && exit 1 }
       hypa::success "Successfully updated package version..."
     else
       hypa:error "Could not update package version..."
